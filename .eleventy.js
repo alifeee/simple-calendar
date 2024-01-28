@@ -119,6 +119,20 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addFilter("isodate", (dt) => {
     return dt.toISOString().split("T")[0];
   });
+  eleventyConfig.addFilter("now", () => {
+    return new Date();
+  });
+  eleventyConfig.addFilter("readableDate", (dt) => {
+    // with time
+    return dt.toLocaleString("default", {
+      weekday: "long",
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      hour: "numeric",
+      minute: "numeric",
+    });
+  });
 
   return {
     dir: {
