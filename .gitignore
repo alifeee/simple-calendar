@@ -1,0 +1,8 @@
+# node
+/node_modules
+
+# build
+/index.html
+
+# data
+/_data/*.yaml
