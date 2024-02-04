@@ -21,6 +21,22 @@ Edit the `yaml` calendar file. For example, to set the status for the 5 days beg
 
 ### Rebuild site
 
+#### With `npm`
+
 ```bash
 npm run build
+```
+
+#### With docker
+
+(for first-time use switch `run build` for `install`)
+
+```bash
+docker run --rm --workdir /_site -v $(pwd):/_site --entrypoint "npm" node:18.16.1-alpine3.18 run build
+```
+
+or
+
+```bash
+./build.sh
 ```
