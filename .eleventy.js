@@ -104,6 +104,10 @@ module.exports = function (eleventyConfig) {
     return calendar;
   });
 
+  eleventyConfig.addFilter("flatten", (array2d) => {
+    return array2d.flat();
+  });
+
   eleventyConfig.addFilter("json", (data) => {
     return JSON.stringify(data);
   });
@@ -118,6 +122,12 @@ module.exports = function (eleventyConfig) {
   });
   eleventyConfig.addFilter("isodate", (dt) => {
     return dt.toISOString().split("T")[0];
+  });
+  eleventyConfig.addFilter("fullisodate", (dt) => {
+    return dt.toISOString();
+  });
+  eleventyConfig.addFilter("hasitems", (dict) => {
+    return Object.keys(dict).length > 0;
   });
   eleventyConfig.addFilter("now", () => {
     return new Date();
@@ -136,9 +146,9 @@ module.exports = function (eleventyConfig) {
 
   return {
     dir: {
-      input: "index.hbs",
+      input: ".",
       data: "_data",
-      output: ".",
+      output: "_site",
       templateFormats: ["hbs"],
     },
   };
