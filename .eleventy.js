@@ -146,9 +146,9 @@ module.exports = function (eleventyConfig) {
 
   return {
     dir: {
-      input: "index.hbs",
+      input: ".",
       data: "_data",
-      output: ".",
+      output: "_site",
       templateFormats: ["hbs"],
     },
   };
