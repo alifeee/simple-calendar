@@ -15,17 +15,22 @@
       margin: 0;
     }
     main {
-      overflow-x: scroll;
     }
     table {
-      border-collapse: collapse;
+      border-collapse: separate;
+      border-spacing: 0;
       width: 100%;
       overflow-x: scroll;
+      position: relative;
     }
-    th {
+    th{
+      position: sticky;
+      top: 0;
       border: 1px solid green;
       text-align: center;
       padding: 8px;
+      background-color: black;
+      z-index: 1;
     }
     td {
       border: 1px solid green;
