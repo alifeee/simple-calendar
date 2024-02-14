@@ -10,7 +10,11 @@ module.exports = function (eleventyConfig) {
 
   eleventyConfig.addGlobalData("names", () => {
     const files = fs.readdirSync("_data");
-    return files.map((file) => file.replace(".yaml", ""));
+    return files
+      .filter((file) => file.endsWith(".yaml"))
+      .map((file) => {
+        return file.replace(".yaml", "");
+      });
   });
 
   eleventyConfig.addGlobalData("calendar", () => {
