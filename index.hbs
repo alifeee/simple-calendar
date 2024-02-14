@@ -51,15 +51,11 @@
     .content {
       margin: 0;
     }
-    .alfie {
-      color: pink;
+    {{#each names}}
+    .{{this}} {
+      color: {{colourCycle @key}};
     }
-    .neil {
-      color: yellow;
-    }
-    .philip {
-      color: orange;
-    }
+    {{/each}}
     button {
       margin-bottom: 1rem;
     }
@@ -91,10 +87,10 @@
     <time datetime="{{isodate (now)}}">{{readableDate (now)}}</time>
     <section class="key">
       <h2>Key</h2>
-      <span class="alfie">Alfie</span>
-      <span class="neil">Neil</span>
-      <span class="philip">Philip</span>
       <span class="today">Today</span>
+      {{#each names}}
+      · <span class="{{this}}">{{this}}</span>
+      {{/each}}
     </section>
   </header>
   <main>

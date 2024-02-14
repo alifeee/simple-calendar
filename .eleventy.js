@@ -8,6 +8,11 @@ module.exports = function (eleventyConfig) {
     yaml.safeLoad(contents)
   );
 
+  eleventyConfig.addGlobalData("names", () => {
+    const files = fs.readdirSync("_data");
+    return files.map((file) => file.replace(".yaml", ""));
+  });
+
   eleventyConfig.addGlobalData("calendar", () => {
     // open all yaml files in _data
     const files = fs.readdirSync("_data");
@@ -142,6 +147,20 @@ module.exports = function (eleventyConfig) {
       hour: "numeric",
       minute: "numeric",
     });
+  });
+  eleventyConfig.addFilter("colourCycle", (index) => {
+    const colours = [
+      "pink",
+      "yellow",
+      "orange",
+      "#f00",
+      "#0f0",
+      "#00f",
+      "#ff0",
+      "#f0f",
+      "#0ff",
+    ];
+    return colours[index % colours.length];
   });
 
   return {
