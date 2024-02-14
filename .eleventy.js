@@ -119,8 +119,13 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addFilter("date", (dt) => {
     const date = dt.getDate();
     const month = dt.toLocaleString("default", { month: "long" });
+    const year = dt.getFullYear();
     if (date === 1) {
-      return `${date} ${month}`;
+      if (month === "January") {
+        return `${date} ${month} ${year}`;
+      } else {
+        return `${date} ${month}`;
+      }
     } else {
       return date;
     }
