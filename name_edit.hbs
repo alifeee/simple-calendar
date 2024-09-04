@@ -4,8 +4,10 @@ pagination:
   data: names
   size: 1
   alias: name
-permalink: /{{name}}/
+permalink: /edit/{{name}}/
 ---
+<form id="form" method="POST" action="">
+<input type="text" hidden name="name" value="{{name}}" />
 <table>
   <tr>
     <th>M</th>
@@ -21,14 +23,13 @@ permalink: /{{name}}/
     {{#each this}}
     <td>
       <time id="{{isodate date}}" class="date">{{date_label}}</time>
-      <p class="{{@root.name}}">
-        {{get text_data @root.name}}
-      </p>
+      <textarea id="{{isodate date}}" name="{{isodate date}}">{{get text_data @root.name}}</textarea>
     </td>
     {{/each}}
   </tr>
   {{/each}}
 </table>
-<p style="margin: 1rem;width: 100%;text-align: center;">
-  <a href="/edit/{{name}}">Edit</a>
-</p>
+<div class="submit" style="margin:1rem;display:flex;justify-content:center">
+  <button role="submit">Submit</button>
+</div>
+</form>
