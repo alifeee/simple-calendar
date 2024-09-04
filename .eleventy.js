@@ -48,14 +48,24 @@ module.exports = function (eleventyConfig) {
         Object.keys(data).forEach((date) => {
           // for each item in date
           let firstdate = new Date(date);
+          firstdate = new Date(
+            Date.UTC(
+              firstdate.getUTCFullYear(),
+              firstdate.getUTCMonth(),
+              firstdate.getUTCDate()
+            )
+          );
+
           data[date].forEach((item, index) => {
             // add index days to firstdate
             let thisdate = firstdate;
             if (index > 0) {
               thisdate = new Date(
-                firstdate.getFullYear(),
-                firstdate.getMonth(),
-                firstdate.getDate() + index
+                Date.UTC(
+                  firstdate.getUTCFullYear(),
+                  firstdate.getUTCMonth(),
+                  firstdate.getUTCDate() + index
+                )
               );
             }
             add_to_dates(dates, thisdate, name, item);
@@ -74,17 +84,25 @@ module.exports = function (eleventyConfig) {
     const first_date = new Date(sorted_dates[0]);
     // get first Monday before first date or first date if it is a Monday
     const first_monday = new Date(
-      first_date.getFullYear(),
-      first_date.getMonth(),
-      first_date.getDate() - first_date.getDay() + 1
+      Date.UTC(
+        first_date.getUTCFullYear(),
+        first_date.getUTCMonth(),
+        first_date.getUTCDay() == 0 // is Sunday ?
+          ? first_date.getUTCDate() - first_date.getUTCDay() + 1 - 7 // get last week's Monday
+          : first_date.getUTCDate() - first_date.getUTCDay() + 1 // get this week's Monday
+      )
     );
     // get last date
     const last_date = new Date(sorted_dates[sorted_dates.length - 1]);
     // get last Sunday after last date or last date if it is a Sunday
     const last_sunday = new Date(
-      last_date.getFullYear(),
-      last_date.getMonth(),
-      last_date.getDate() + (7 - last_date.getDay())
+      Date.UTC(
+        last_date.getUTCFullYear(),
+        last_date.getUTCMonth(),
+        last_date.getUTCDay() == 0 // sunday
+          ? last_date.getUTCDate() + (0 - last_date.getUTCDay())
+          : last_date.getUTCDate() + (7 - last_date.getUTCDay())
+      )
     );
     calendar = [];
     // for each week
@@ -92,7 +110,7 @@ module.exports = function (eleventyConfig) {
     for (
       let week = first_monday;
       week <= last_sunday;
-      week.setDate(week.getDate() + 7)
+      week.setDate(week.getUTCDate() + 7)
     ) {
       // add week to calendar
       calendar.push([]);
@@ -100,7 +118,7 @@ module.exports = function (eleventyConfig) {
       for (let day = 0; day < 7; day++) {
         // get date object or null if it is not in dates
         const date = new Date(week);
-        date.setDate(week.getDate() + day);
+        date.setDate(week.getUTCDate() + day);
         const date_string = date.toString();
         const text_data = dates[date_string] || {};
         // add label with extra data if needed (i.e., first visible day of month/year)
@@ -136,20 +154,6 @@ module.exports = function (eleventyConfig) {
 
   eleventyConfig.addFilter("json", (data) => {
     return JSON.stringify(data);
-  });
-  eleventyConfig.addFilter("date", (dt) => {
-    const date = dt.getDate();
-    const month = dt.toLocaleString("default", { month: "long" });
-    const year = dt.getFullYear();
-    if (date === 1) {
-      if (month === "January") {
-        return `${date} ${month} ${year}`;
-      } else {
-        return `${date} ${month}`;
-      }
-    } else {
-      return date;
-    }
   });
   eleventyConfig.addFilter("isodate", (dt) => {
     return dt.toISOString().split("T")[0];
