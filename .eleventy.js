@@ -89,7 +89,11 @@ module.exports = function (eleventyConfig) {
       return new Date(a) - new Date(b);
     });
     // then, get the first date
-    const first_date = new Date(sorted_dates[0]);
+    let first_date = new Date(sorted_dates[0]);
+    let now = new Date();
+    if (first_date > now) {
+      first_date = now;
+    }
     // get first Monday before first date or first date if it is a Monday
     const first_monday = new Date(
       Date.UTC(
@@ -101,7 +105,10 @@ module.exports = function (eleventyConfig) {
       )
     );
     // get last date
-    const last_date = new Date(sorted_dates[sorted_dates.length - 1]);
+    let last_date = new Date(sorted_dates[sorted_dates.length - 1]);
+    if (last_date < now) {
+      last_date = now;
+    }
     // get last Sunday after last date or last date if it is a Sunday
     const last_sunday = new Date(
       Date.UTC(
