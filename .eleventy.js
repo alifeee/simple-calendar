@@ -55,21 +55,29 @@ module.exports = function (eleventyConfig) {
               firstdate.getUTCDate()
             )
           );
+          const thisdata = data[date];
 
-          data[date].forEach((item, index) => {
-            // add index days to firstdate
-            let thisdate = firstdate;
-            if (index > 0) {
-              thisdate = new Date(
-                Date.UTC(
-                  firstdate.getUTCFullYear(),
-                  firstdate.getUTCMonth(),
-                  firstdate.getUTCDate() + index
-                )
-              );
-            }
-            add_to_dates(dates, thisdate, name, item);
-          });
+          // string (one event for one date)
+          if (typeof thisdata == "string") {
+            add_to_dates(dates, firstdate, name, thisdata);
+          }
+          // array (multiple events in succession starting from one date)
+          else {
+            thisdata.forEach((item, index) => {
+              // add index days to firstdate
+              let thisdate = firstdate;
+              if (index > 0) {
+                thisdate = new Date(
+                  Date.UTC(
+                    firstdate.getUTCFullYear(),
+                    firstdate.getUTCMonth(),
+                    firstdate.getUTCDate() + index
+                  )
+                );
+              }
+              add_to_dates(dates, thisdate, name, item);
+            });
+          }
         });
       }
     });

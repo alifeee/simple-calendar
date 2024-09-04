@@ -17,6 +17,8 @@ Edit the `yaml` calendar file. For example, to set the status for the 5 days beg
 - tuesday
 -
 - friday
+
+2024-02-15: doing this on this specific day
 ```
 
 ### Rebuild site
