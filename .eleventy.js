@@ -167,6 +167,9 @@ module.exports = function (eleventyConfig) {
     return obj[key];
   });
   eleventyConfig.addFilter("isodate", (dt) => {
+    return dt.toISOString().split("T")[0];
+  });
+  eleventyConfig.addFilter("isodatetime", (dt) => {
     return dt.toISOString();
   });
   eleventyConfig.addFilter("fullisodate", (dt) => {

@@ -84,7 +84,9 @@
       const todayElement = document.getElementById(todayString);
       if (todayElement) {
         todayElement.classList.add('today');
-      } 
+      } else {
+        console.warn("no element found for today:", todayString)
+      }
     });
   </script>
   <script>
@@ -128,7 +130,7 @@
   <header>
     <h1>Calendar</h1>
     Last updated:
-    <time id="lastupdated" datetime="{{isodate (now)}}" title="{{isodate (now)}}">{{readableDate (now)}}</time>
+    <time id="lastupdated" datetime="{{isodatetime (now)}}" title="{{isodatetime (now)}}">{{readableDate (now)}}</time>
     <span id="timeAgo"></span>
   </header>
   <main>
