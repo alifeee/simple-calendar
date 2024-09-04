@@ -1,130 +1,30 @@
-<!DOCTYPE html>
-<head>
-  <title>Calendar</title>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <style>
-    body {
-      font-family: Arial, Helvetica, sans-serif;
-      margin: 0;
-      padding: 1rem;
-      background-color: black;
-      color: white;
-    }
-    p {
-      margin: 0;
-    }
-    main {
-    }
-    table {
-      border-collapse: separate;
-      border-spacing: 0;
-      width: 100%;
-      overflow-x: scroll;
-      position: relative;
-    }
-    th{
-      position: sticky;
-      top: 0;
-      border: 1px solid green;
-      text-align: center;
-      padding: 8px;
-      background-color: black;
-      z-index: 1;
-    }
-    td {
-      border: 1px solid green;
-      text-align: left;
-      padding: 0.5rem;
-      padding-top: 2.5rem;
-      position: relative;
-      width: 14.28%;
-      min-width: 6rem;
-    }
-    td .date {
-      position: absolute;
-      top: 0;
-      right: 0;
-      font-size: 0.8rem;
-      padding: 0.5rem;
-      background-color: #00aa0044;
-      font-weight: bold;
-    }
-    .today {
-      background-color: red !important;
-    }
-    .content {
-      margin: 0;
-    }
-    {{#each names}}
-    .{{this}} {
-      color: {{colourCycle @key}};
-    }
+---
+layout: base.hbs
+---
+<h2>Calendar</h2>
+<button onclick="goToToday()">Go to today</button>
+<table>
+  <tr>
+    <th>M</th>
+    <th>T</th>
+    <th>W</th>
+    <th>T</th>
+    <th>F</th>
+    <th>S</th>
+    <th>S</th>
+  </tr>
+  {{#each calendar}}
+  <tr>
+    {{#each this}}
+    <td>
+      <time id="{{isodate date}}" class="date">{{date_label}}</time>
+      {{#each text_data}}
+      <p class="{{@key}}">
+        {{this}}
+      </p>
+      {{/each}}
+    </td>
     {{/each}}
-    button {
-      margin-bottom: 1rem;
-    }
-  </style>
-  <script>
-    function goToToday() {
-      const today = new Date();
-      const todayString = today.toISOString().slice(0, 10);
-      // add hashlink to url
-      window.location.hash = todayString;
-    }
-    document.addEventListener('DOMContentLoaded', () => {
-      // add today class to today's date
-      console.log('DOMContentLoaded');
-      const today = new Date();
-      const todayString = today.toISOString().slice(0, 10);
-      console.log(todayString)
-      const todayElement = document.getElementById(todayString);
-      if (todayElement) {
-        todayElement.classList.add('today');
-      } 
-    });
-  </script>
-</head>
-<body>
-  <header>
-    <h1>Calendar</h1>
-    Last updated:
-    <time datetime="{{isodate (now)}}">{{readableDate (now)}}</time>
-    <section class="key">
-      <h2>Key</h2>
-      <span class="today">Today</span>
-      {{#each names}}
-      · <span class="{{this}}">{{this}}</span>
-      {{/each}}
-    </section>
-  </header>
-  <main>
-    <h2>Calendar</h2>
-    <button onclick="goToToday()">Go to today</button>
-    <table>
-      <tr>
-        <th>M</th>
-        <th>T</th>
-        <th>W</th>
-        <th>T</th>
-        <th>F</th>
-        <th>S</th>
-        <th>S</th>
-      </tr>
-      {{#each calendar}}
-      <tr>
-        {{#each this}}
-        <td>
-          <time id="{{isodate date}}" class="date">{{date_label}}</time>
-          {{#each text_data}}
-          <p class="{{@key}}">
-            {{this}}
-          </p>
-          {{/each}}
-        </td>
-        {{/each}}
-      </tr>
-      {{/each}}
-    </table>
-  </main>
-</body>
+  </tr>
+  {{/each}}
+</table>
