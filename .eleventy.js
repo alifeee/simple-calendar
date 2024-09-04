@@ -88,6 +88,7 @@ module.exports = function (eleventyConfig) {
     );
     calendar = [];
     // for each week
+    let first = true;
     for (
       let week = first_monday;
       week <= last_sunday;
@@ -102,9 +103,25 @@ module.exports = function (eleventyConfig) {
         date.setDate(week.getDate() + day);
         const date_string = date.toString();
         const text_data = dates[date_string] || {};
+        // add label with extra data if needed (i.e., first visible day of month/year)
+        const date_dayofmonth = date.getUTCDate();
+        const date_monthofyear = date.toLocaleString("default", {
+          month: "short",
+        });
+        const date_year = date.getUTCFullYear();
+        let date_label = date_dayofmonth;
+        if (date_dayofmonth === 1 || first) {
+          if (date_monthofyear === "January" || first) {
+            date_label = `${date_dayofmonth} ${date_monthofyear} ${date_year}`;
+            first = false;
+          } else {
+            date_label = `${date_dayofmonth} ${date_monthofyear}`;
+          }
+        }
         // add info to calendar day
         calendar[calendar.length - 1].push({
           date: date,
+          date_label: date_label,
           text_data: text_data,
         });
       }
