@@ -87,12 +87,49 @@
       } 
     });
   </script>
+  <script>
+    function timeSince(date) {
+        var seconds = Math.floor((new Date() - date) / 1000);
+
+        var interval = seconds / 31536000;
+
+        if (interval > 2) {
+          return Math.floor(interval) + " years";
+        }
+        interval = seconds / 2592000;
+        if (interval > 2) {
+          return Math.floor(interval) + " months";
+        }
+        interval = seconds / 86400;
+        if (interval > 2) {
+          return Math.floor(interval) + " days";
+        }
+        interval = seconds / 3600;
+        if (interval > 2) {
+          return Math.floor(interval) + " hours";
+        }
+        interval = seconds / 60;
+        if (interval > 2) {
+          return Math.floor(interval) + " minutes";
+        }
+        return Math.floor(seconds) + " seconds";
+      }
+      document.addEventListener("DOMContentLoaded", () => {
+        let time_el = document.getElementById("lastupdated")
+        let time = time_el.getAttribute("datetime")
+        let timeUpdated = Date.parse(time)
+        let timeAgo = timeSince(timeUpdated)
+        let timeAgo_el = document.getElementById("timeAgo")
+        timeAgo_el.innerHTML= `(${timeAgo} ago)`
+      })
+  </script>
 </head>
 <body>
   <header>
     <h1>Calendar</h1>
     Last updated:
-    <time datetime="{{isodate (now)}}">{{readableDate (now)}}</time>
+    <time id="lastupdated" datetime="{{isodate (now)}}" title="{{isodate (now)}}">{{readableDate (now)}}</time>
+    <span id="timeAgo"></span>
   </header>
   <main>
     <h2>Calendar</h2>
