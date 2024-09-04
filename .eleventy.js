@@ -163,6 +163,10 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addFilter("json", (data) => {
     return JSON.stringify(data);
   });
+  eleventyConfig.addFilter("get", (obj, key) => {
+    console.log("get", key, "from", obj);
+    return obj[key];
+  });
   eleventyConfig.addFilter("isodate", (dt) => {
     return dt.toISOString().split("T")[0];
   });

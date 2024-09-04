@@ -51,10 +51,15 @@
       font-weight: bold;
     }
     .today {
+      color: white;
       background-color: red !important;
+      border-color: brown;
     }
     .content {
       margin: 0;
+    }
+    .all {
+      color: white;
     }
     {{#each names}}
     .{{this}} {
@@ -74,10 +79,8 @@
     }
     document.addEventListener('DOMContentLoaded', () => {
       // add today class to today's date
-      console.log('DOMContentLoaded');
       const today = new Date();
       const todayString = today.toISOString().slice(0, 10);
-      console.log(todayString)
       const todayElement = document.getElementById(todayString);
       if (todayElement) {
         todayElement.classList.add('today');
@@ -90,15 +93,16 @@
     <h1>Calendar</h1>
     Last updated:
     <time datetime="{{isodate (now)}}">{{readableDate (now)}}</time>
-    <section class="key">
-      <h2>Key</h2>
-      <span class="today">Today</span>
-      {{#each names}}
-      · <span class="{{this}}">{{this}}</span>
-      {{/each}}
-    </section>
   </header>
   <main>
+    <h2>Calendar</h2>
+    <section class="key">
+      <button onclick="goToToday()" class="today">Go to today</button>
+      · <a href="/" class="all">all</a>
+      {{#each names}}
+      · <a href="/{{this}}" class="{{this}}">{{this}}</a>
+      {{/each}}
+    </section>
     {{{content}}}
   </main>
 </body>

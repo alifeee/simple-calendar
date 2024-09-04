@@ -1,5 +1,10 @@
 ---
 layout: base.hbs
+pagination:
+  data: names
+  size: 1
+  alias: name
+permalink: /{{name}}/
 ---
 <table>
   <tr>
@@ -16,11 +21,9 @@ layout: base.hbs
     {{#each this}}
     <td>
       <time id="{{isodate date}}" class="date">{{date_label}}</time>
-      {{#each text_data}}
-      <p class="{{@key}}">
-        {{this}}
+      <p class="{{@root.name}}">
+        {{get text_data @root.name}}
       </p>
-      {{/each}}
     </td>
     {{/each}}
   </tr>
