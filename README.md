@@ -42,3 +42,31 @@ or
 ```bash
 ./build.sh
 ```
+
+## Set up on server
+
+```bash
+mkdir -p /var/www/
+git clone git@github.com:alifeee/simple-calendar.git /var/www/simple-calendar/
+cd /var/www/simple-calendar/
+npm install
+npm run build
+sudo nano /etc/nginx/nginx.conf
+```
+
+```nginx
+  server {
+    server_name cal.alifeee.co.uk;
+    location / {
+      root /var/www/simple-calendar/_site;
+      try_files $uri $uri/ =404;
+    }
+    listen 80;
+    listen [::]:80;
+  }
+```
+
+```bash
+sudo certbot --nginx
+sudo systemctl restart nginx.service
+```
