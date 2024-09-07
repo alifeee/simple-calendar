@@ -65,6 +65,8 @@ sudo nano /etc/nginx/nginx.conf
       include fastcgi_params;
       fastcgi_param SCRIPT_FILENAME /var/www/simple-calendar/edit;
       fastcgi_pass unix:/var/run/fcgiwrap.socket;
+      auth_basic "calendar edit";
+      auth_basic_user_file /etc/nginx/.htpasswd;
     }
     listen 80;
     listen [::]:80;
