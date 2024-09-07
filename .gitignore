@@ -4,3 +4,7 @@
 # build
 /index.html
 /_site
+/backups
+
+# python
+/env

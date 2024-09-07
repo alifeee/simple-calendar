@@ -61,6 +61,11 @@ sudo nano /etc/nginx/nginx.conf
       root /var/www/simple-calendar/_site;
       try_files $uri $uri/ =404;
     }
+    location = /edit {
+      include fastcgi_params;
+      fastcgi_param SCRIPT_FILENAME /var/www/simple-calendar/edit;
+      fastcgi_pass unix:/var/run/fcgiwrap.socket;
+    }
     listen 80;
     listen [::]:80;
   }
@@ -69,4 +74,18 @@ sudo nano /etc/nginx/nginx.conf
 ```bash
 sudo certbot --nginx
 sudo systemctl restart nginx.service
+```
+
+Set up Python for CGI edit script
+
+```bash
+python3 -m venv env
+./env/bin/pip install -r requirements.txt
+chown alifeee:www-data _data/alfie.yaml
+```
+
+to test edit script:
+
+```bash
+echo 'name=alfie&2024-09-01=what' | sudo -u www-data ./edit
 ```

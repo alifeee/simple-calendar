@@ -1,0 +1,63 @@
+#!/var/www/simple-calendar/env/bin/python3
+
+import csv
+import os
+import sys
+import re
+from datetime import datetime
+from urllib.parse import parse_qs
+from yaml import dump
+
+request = sys.stdin.read()
+qs = parse_qs(request)
+NAME = qs.get('name', [""])[0]
+qs.pop("name")
+
+def error(message):
+  print("Status: 400")
+  print()
+  print(message)
+  sys.exit(1)
+
+# bad (non alpha-numeric or dash) characters
+if len(re.sub(r"[^a-zA-Z0-9-]", "", NAME)) < len(NAME):
+  error(f"bad characters found in name: {NAME}")
+
+# no yaml file exists
+YAML_FILE = f"{NAME}.yaml"
+if not os.path.exists(os.path.join("_data", YAML_FILE)):
+  error(f"{NAME}.yaml not found")
+
+# backup _data folder
+now = datetime.utcnow()
+now_str = now.strftime("%Y-%m-%dT%H%M%S")
+backup_folder = os.path.join("backups", now_str)
+if not os.path.exists(backup_folder):
+  os.makedirs(backup_folder)
+os.system(f"cp _data/* {backup_folder}")
+
+# verify all request items look like dates
+for date, event in qs.items():
+  if re.match(r"[0-9]{4}-[0-9]{2}-[0-9]{2}", date) is None:
+    error(f"bad date: {date}\n for event: {event}")
+
+# create object from request items (flatten lists)
+newfile = {}
+for date, event in qs.items():
+  newfile[date] = event[0]
+
+print("Content-Type: text/plain")
+print()
+print(f"name: {NAME}")
+
+print("data:")
+print(qs)
+
+print("newfile")
+print(newfile)
+
+print("yaml saved")
+with open("_data/alfie.yaml", 'w', encoding="utf-8") as file:
+  file.write(dump(newfile))
+
+print("cannot run npm run build :(")
