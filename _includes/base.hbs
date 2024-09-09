@@ -125,6 +125,24 @@
         timeAgo_el.innerHTML= `(${timeAgo} ago)`
       })
   </script>
+  <style>
+    h1 {
+      margin: 0 0 0.5rem 0;
+    }
+    header {
+      margin: 0 0 1rem 0;
+    }
+    h2 {
+      margin: 0.5rem 0;
+    }
+    footer p {
+      max-width: 40rem;
+      margin: 0.5rem 0;
+    }
+    a {
+      color: white;
+    }
+  </style>
 </head>
 <body>
   <header>
@@ -134,7 +152,6 @@
     <span id="timeAgo"></span>
   </header>
   <main>
-    <h2>Calendar</h2>
     <section class="key">
       <button onclick="goToToday()" class="today">Go to today</button>
       · <a href="/" class="all">all</a>
@@ -144,4 +161,22 @@
     </section>
     {{{content}}}
   </main>
+  <footer>
+    <h2 id="what-is-this">What is this?</h2>
+    <p></p>
+      Welcome to my social calendar :)
+    </p>
+    <p>
+      This is an experiment. I will be putting things on here that I plan on doing. If you know me, text me about them, and ask to come along! You're always welcome to come to anything on here. There's also an <a href="/feed.xml">RSS feed</a>!
+    </p>
+    <p>
+      If this is empty, either I have stopped using this, or I am in a period of *deep* relaxation and introspection.
+    </p>
+    <p>
+      This site is visible by anyone. It is at least partly inspired by <a href="https://astro.dur.ac.uk/~dma/davo_location.html">https://astro.dur.ac.uk/~dma/davo_location.html</a>.
+    </p>
+    <p>
+      - <a href="https://alifeee.co.uk">alifeee</a>
+    </p>
+  </footer>
 </body>
