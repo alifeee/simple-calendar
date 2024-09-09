@@ -1,4 +1,8 @@
 #!/bin/bash
-# build with npm via docker
 
-docker run --rm --workdir /_site -v $(pwd):/_site --entrypoint "npm" node:current-alpine3.19 run build --no-update-notifier
+export NVM_DIR="/usr/alifeee/nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+
+nvm use 20
+
+npm run build
