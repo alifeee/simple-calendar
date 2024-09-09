@@ -45,12 +45,42 @@ or
 
 ## Set up on server
 
+### Install nvm and node
+
+Install these in a location accessible to anyone, so that the `www-data` user can use them later.
+
+```bash
+# install nvm to /usr/alifeee/nvm
+export XDG_CONFIG_HOME="/usr/alifeee"
+# install nvm, see https://github.com/nvm-sh/nvm
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash
+```
+
+Now you can use `node` and `npm` as any user by running:
+
+```bash
+export NVM_DIR="/usr/alifeee/nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+
+nvm use 20
+npm run build
+```
+
+Test this by putting the above in a script and running (e.g.,) `sudo -u www-data build.sh`
+
+### Download files
+
 ```bash
 mkdir -p /var/www/
 git clone git@github.com:alifeee/simple-calendar.git /var/www/simple-calendar/
 cd /var/www/simple-calendar/
 npm install
 npm run build
+```
+
+### Edit nginx config
+
+```bash
 sudo nano /etc/nginx/nginx.conf
 ```
 
@@ -78,7 +108,7 @@ sudo certbot --nginx
 sudo systemctl restart nginx.service
 ```
 
-Set up Python for CGI edit script
+### Set up Python for CGI edit script
 
 ```bash
 python3 -m venv env
