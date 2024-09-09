@@ -10,7 +10,7 @@ permalink: /feed.xml
         <name>alifeee</name>
     </author>
     <id>http://office.biscuits.digital/</id>
-{{#each (flatten calendar)}}
+{{#each (flatten (calendar))}}
 {{#if (hasitems this.text_data)}}
     {{#each text_data}}
     {{#if this}}

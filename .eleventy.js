@@ -17,10 +17,18 @@ module.exports = function (eleventyConfig) {
       });
   });
 
-  eleventyConfig.addGlobalData("calendar", () => {
+  eleventyConfig.addFilter("calendar", (name, extra_rows) => {
     // open all yaml files in _data
-    const files = fs.readdirSync("_data");
+    let files = fs.readdirSync("_data");
+    files = files.filter((file) => file.endsWith(".yaml"));
+    if (typeof name == "string" && name != "") {
+      files = files.filter((file) => file.includes(name));
+    }
     const dates = {};
+
+    if (typeof extra_rows != "number") {
+      extra_rows = 0;
+    }
 
     function add_to_dates(dates, date, name, data) {
       // if date is not in dates, add it
@@ -39,47 +47,45 @@ module.exports = function (eleventyConfig) {
     }
 
     files.forEach((file) => {
-      if (file.endsWith(".yaml")) {
-        // get filename without extension
-        const name = file.replace(".yaml", "");
-        const data = yaml.safeLoad(fs.readFileSync(`_data/${file}`, "utf8"));
+      // get filename without extension
+      const name = file.replace(".yaml", "");
+      const data = yaml.safeLoad(fs.readFileSync(`_data/${file}`, "utf8"));
 
-        // for each date
-        Object.keys(data).forEach((date) => {
-          // for each item in date
-          let firstdate = new Date(date);
-          firstdate = new Date(
-            Date.UTC(
-              firstdate.getUTCFullYear(),
-              firstdate.getUTCMonth(),
-              firstdate.getUTCDate()
-            )
-          );
-          const thisdata = data[date];
+      // for each date
+      Object.keys(data).forEach((date) => {
+        // for each item in date
+        let firstdate = new Date(date);
+        firstdate = new Date(
+          Date.UTC(
+            firstdate.getUTCFullYear(),
+            firstdate.getUTCMonth(),
+            firstdate.getUTCDate()
+          )
+        );
+        const thisdata = data[date];
 
-          // string (one event for one date)
-          if (typeof thisdata == "string") {
-            add_to_dates(dates, firstdate, name, thisdata);
-          }
-          // array (multiple events in succession starting from one date)
-          else {
-            thisdata.forEach((item, index) => {
-              // add index days to firstdate
-              let thisdate = firstdate;
-              if (index > 0) {
-                thisdate = new Date(
-                  Date.UTC(
-                    firstdate.getUTCFullYear(),
-                    firstdate.getUTCMonth(),
-                    firstdate.getUTCDate() + index
-                  )
-                );
-              }
-              add_to_dates(dates, thisdate, name, item);
-            });
-          }
-        });
-      }
+        // string (one event for one date)
+        if (typeof thisdata == "string") {
+          add_to_dates(dates, firstdate, name, thisdata);
+        }
+        // array (multiple events in succession starting from one date)
+        else {
+          thisdata.forEach((item, index) => {
+            // add index days to firstdate
+            let thisdate = firstdate;
+            if (index > 0) {
+              thisdate = new Date(
+                Date.UTC(
+                  firstdate.getUTCFullYear(),
+                  firstdate.getUTCMonth(),
+                  firstdate.getUTCDate() + index
+                )
+              );
+            }
+            add_to_dates(dates, thisdate, name, item);
+          });
+        }
+      });
     });
 
     // dates is now something like {"Mon Jan 29 2024 00:00:00 GMT+0000 (Greenwich Mean Time)":{"alfie":"hello","neil":"terminate"},"Tue Jan 30 2024 00:00:00 GMT+0000 (Greenwich Mean Time)":{"alfie":"world","neil":"john"}}
@@ -114,9 +120,10 @@ module.exports = function (eleventyConfig) {
       Date.UTC(
         last_date.getUTCFullYear(),
         last_date.getUTCMonth(),
-        last_date.getUTCDay() == 0 // sunday
+        (last_date.getUTCDay() == 0 // sunday
           ? last_date.getUTCDate() + (0 - last_date.getUTCDay())
-          : last_date.getUTCDate() + (7 - last_date.getUTCDay())
+          : last_date.getUTCDate() + (7 - last_date.getUTCDay())) +
+          extra_rows * 7
       )
     );
     calendar = [];
