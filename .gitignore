@@ -6,6 +6,7 @@
 /_site
 /backups
 /log
+/cron.log
 
 # python
 /env
