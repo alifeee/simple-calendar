@@ -54,6 +54,10 @@ Install these in a location accessible to anyone, so that the `www-data` user ca
 export XDG_CONFIG_HOME="/usr/alifeee"
 # install nvm, see https://github.com/nvm-sh/nvm
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash
+# install node
+source ~/.bashrc
+nvm install 20
+nvm use 20
 ```
 
 Now you can use `node` and `npm` as any user by running:
@@ -76,6 +80,7 @@ git clone git@github.com:alifeee/simple-calendar.git /var/www/simple-calendar/
 cd /var/www/simple-calendar/
 npm install
 npm run build
+chown -R alifeee:www-data _site/
 ```
 
 ### Edit nginx config
