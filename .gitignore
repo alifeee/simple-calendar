@@ -5,6 +5,7 @@
 /index.html
 /_site
 /backups
+/log
 
 # python
 /env
