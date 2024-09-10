@@ -4,8 +4,8 @@ hoover up events in yaml that are older than today's date
 add to crontab with
   crontab -e
 then type
-  0 5 * * * /var/www/simple-calendar/hoover.py >> /var/www/simple-calendar/cron.log 2>&1
-to run at 5am every day
+  0 23 * * * /var/www/simple-calendar/hoover.py >> /var/www/simple-calendar/cron.log 2>&1
+to run at 11pm every day (wipes current day)
 """
 
 import os
