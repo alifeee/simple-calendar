@@ -95,6 +95,9 @@ sudo nano /etc/nginx/nginx.conf
     location / {
       root /var/www/simple-calendar/_site;
       try_files $uri $uri/ =404;
+      add_header Cache-Control no-cache;
+      if_modified_since off;
+      add_header Last-Modified "";
     }
     location = /edit {
       include fastcgi_params;
