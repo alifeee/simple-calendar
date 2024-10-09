@@ -49,7 +49,8 @@ module.exports = function (eleventyConfig) {
     files.forEach((file) => {
       // get filename without extension
       const name = file.replace(".yaml", "");
-      const data = yaml.safeLoad(fs.readFileSync(`_data/${file}`, "utf8"));
+      let data = yaml.safeLoad(fs.readFileSync(`_data/${file}`, "utf8"));
+      if (!data) data = {};
 
       // for each date
       Object.keys(data).forEach((date) => {
@@ -97,7 +98,7 @@ module.exports = function (eleventyConfig) {
     // then, get the first date
     let first_date = new Date(sorted_dates[0]);
     let now = new Date();
-    if (first_date > now) {
+    if (first_date > now || isNaN(first_date)) {
       first_date = now;
     }
     // get first Monday before first date or first date if it is a Monday
@@ -112,7 +113,7 @@ module.exports = function (eleventyConfig) {
     );
     // get last date
     let last_date = new Date(sorted_dates[sorted_dates.length - 1]);
-    if (last_date < now) {
+    if (last_date < now || isNaN(last_date)) {
       last_date = now;
     }
     // get last Sunday after last date or last date if it is a Sunday
@@ -208,15 +209,30 @@ module.exports = function (eleventyConfig) {
   });
   eleventyConfig.addFilter("colourCycle", (index) => {
     const colours = [
-      "pink",
-      "yellow",
-      "orange",
       "#f00",
       "#0f0",
       "#00f",
       "#ff0",
       "#f0f",
       "#0ff",
+      "#800",
+      "#080",
+      "#008",
+      "#880",
+      "#808",
+      "#088",
+      "#f80",
+      "#f08",
+      "#0f8",
+      "#08f",
+      "#8f0",
+      "#80f",
+      "#f88",
+      "#8f8",
+      "#88f",
+      "#ff8",
+      "#f8f",
+      "#8ff",
     ];
     return colours[index % colours.length];
   });
