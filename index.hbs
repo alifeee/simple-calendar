@@ -17,7 +17,7 @@ layout: base.hbs
     <td>
       <time id="{{isodate date}}" class="date">{{date_label}}</time>
       {{#each text_data}}
-      <p class="{{@key}}">
+      <p class="{{@key}}" title="{{@key}}">
         {{this}}
       </p>
       {{/each}}
