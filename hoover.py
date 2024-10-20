@@ -24,6 +24,8 @@ for yaml_file in yaml_files:
 	with open(yaml_file, 'r', encoding="utf-8") as file:
 		contents = file.read()
 	contents_yaml = load(contents, Loader=Loader)
+	if contents_yaml is None:
+		contents_yaml = {}
 
 	# backup
 	now = datetime.utcnow()
