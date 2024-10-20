@@ -4,20 +4,20 @@ permalink: /feed.xml
 <?xml version='1.0' encoding='UTF-8'?>
 <feed xmlns="http://www.w3.org/2005/Atom">
     <title>biscuit calendar</title>
-    <link href='http://office.biscuits.digital' rel='self' />
+    <link href='{{info.baseURL}}' rel='self' />
     <updated>{{fullisodate (now)}}</updated>
     <author>
         <name>alifeee</name>
     </author>
-    <id>http://office.biscuits.digital/</id>
+    <id>{{info.baseURL}}</id>
 {{#each (flatten (calendar))}}
 {{#if (hasitems this.text_data)}}
     {{#each text_data}}
     {{#if this}}
     <entry>
         <title>calendar item</title>
-        <link href='http://office.biscuits.digital#{{isodate ../date}}' />
-        <id>{{fullisodate ../date}}_{{@key}}_{{this}}</id>
+        <link href='{{../../info.baseURL}}/{{encURIcmp @key}}/#{{isodate ../date}}' />
+        <id>{{../../info.baseURL}}/{{encURIcmp @key}}/#{{isodate ../date}}</id>
         <updated>{{fullisodate ../date}}</updated>
         <summary>{{@key}} - {{isodate ../date}} - {{this}}</summary>
     </entry>

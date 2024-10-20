@@ -78,6 +78,10 @@ Test this by putting the above in a script and running (e.g.,) `sudo -u www-data
 mkdir -p /var/www/
 git clone git@github.com:alifeee/simple-calendar.git /var/www/simple-calendar/
 cd /var/www/simple-calendar/
+# add base URL
+cp _data/info.json.example _data/info.json
+nano _data/info.json
+# install and build
 npm install
 npm run build
 chown -R alifeee:www-data _site/

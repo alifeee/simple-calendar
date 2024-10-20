@@ -178,6 +178,9 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addFilter("json", (data) => {
     return JSON.stringify(data);
   });
+  eleventyConfig.addFilter("encURIcmp", (string) => {
+    return encodeURIComponent(string);
+  });
   eleventyConfig.addFilter("get", (obj, key) => {
     return obj[key];
   });
