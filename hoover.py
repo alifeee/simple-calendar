@@ -9,8 +9,11 @@ to run at 11pm every day (wipes current day)
 """
 
 import os
-from datetime import datetime
+from datetime import datetime, timedelta
 from yaml import load, Loader, dump
+
+# remove all events before this many days before now
+HOOVER_BEFORE_DAYS = 5
 
 folder = os.path.dirname(os.path.realpath(__file__))
 
@@ -35,12 +38,14 @@ for yaml_file in yaml_files:
 		os.makedirs(backup_folder)
 	os.system(f"cp {folder}/_data/* {backup_folder}")
 
+	last_week = now - timedelta(days=HOOVER_BEFORE_DAYS)
+
 	new_events = {}
 	hoovered = 0
 	for date_str, event in contents_yaml.items():
 		if type(event) == str:
 			date = datetime.strptime(date_str, "%Y-%m-%d")
-			if date < now:
+			if date < last_week:
 				hoovered += 1
 			else:
 				new_events[date_str] = event
