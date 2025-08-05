@@ -13,7 +13,7 @@ from datetime import datetime, timedelta
 from yaml import load, Loader, dump
 
 # remove all events before this many days before now
-HOOVER_BEFORE_DAYS = 5
+HOOVER_BEFORE_DAYS = 7
 
 folder = os.path.dirname(os.path.realpath(__file__))
 
