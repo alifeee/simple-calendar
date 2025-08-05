@@ -65,6 +65,13 @@
     {{#each names}}
     .{{this}} {
       color: {{colourCycle @key}};
+      text-underline-offset: 3px;
+      {{#if (gt @index 5)}}
+      text-decoration: underline dashed;
+      {{/if}}
+      {{#if (gt @index 11)}}
+      text-decoration: underline dotted;
+      {{/if}}
     }
     {{/each}}
     button {

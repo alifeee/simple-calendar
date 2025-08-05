@@ -199,6 +199,9 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addFilter("now", () => {
     return new Date();
   });
+  eleventyConfig.addFilter("gt", (v1, v2) => {
+    return v1 > v2;
+  });
   eleventyConfig.addFilter("readableDate", (dt) => {
     // with time
     return dt.toLocaleString("default", {
