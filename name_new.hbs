@@ -1,0 +1,33 @@
+---
+layout: base.hbs
+permalink: /new/
+---
+<form id="form" method="POST" action="/edit">
+<h2>A new calendarizer! What's your name? (lowercase, first name only)</h2>
+<input type="text" name="name" value="{{name}}" />
+<hr>
+<table>
+  <tr>
+    <th>M</th>
+    <th>T</th>
+    <th>W</th>
+    <th>T</th>
+    <th>F</th>
+    <th>S</th>
+    <th>S</th>
+  </tr>
+  {{#each (calendar name 4)}}
+  <tr>
+    {{#each this}}
+    <td>
+      <time id="{{isodate date}}" class="date">{{date_label}}</time>
+      <textarea id="{{isodate date}}" name="{{isodate date}}">{{get text_data @root.name}}</textarea>
+    </td>
+    {{/each}}
+  </tr>
+  {{/each}}
+</table>
+<div class="submit" style="margin:1rem;display:flex;justify-content:center">
+  <button role="submit">Submit</button>
+</div>
+</form>

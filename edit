@@ -34,10 +34,10 @@ def log(message):
 if len(re.sub(r"[^a-zA-Z0-9-é]", "", NAME)) < len(NAME):
     error(f"bad characters found in name: {NAME}")
 
-# no yaml file exists
+# no yaml file exists (this is ok, we make a new file)
 YAML_FILE = os.path.join("_data", f"{NAME}.yaml")
-if not os.path.exists(YAML_FILE):
-    error(f"{YAML_FILE} not found")
+# if not os.path.exists(YAML_FILE):
+#     error(f"{YAML_FILE} not found")
 
 # verify all request items look like dates
 for date, event in qs.items():

@@ -52,9 +52,15 @@ for yaml_file in yaml_files:
         else:
             raise ValueError("cannot deal with lists yet")
 
-    with open(yaml_file, "w", encoding="utf-8") as file:
-        file.write(dump(new_events))
-
     print(f"hoovered {hoovered} events from {yaml_file}")
+
+    if len(new_events) == 0:
+        # delete!
+        os.remove(yaml_file)
+        print("  and deleted it!")
+    else:
+        # rewrite
+        with open(yaml_file, "w", encoding="utf-8") as file:
+            file.write(dump(new_events))
 
 os.system(f"(cd {folder}; ./build.sh &>/dev/null)")
