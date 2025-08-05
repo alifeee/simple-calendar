@@ -28,7 +28,7 @@ def log(message):
 		print(f"[{now_str}]: {message}", file=file)
 
 # bad (non alpha-numeric or dash) characters
-if len(re.sub(r"[^a-zA-Z0-9-]", "", NAME)) < len(NAME):
+if len(re.sub(r"[^a-zA-Z0-9-é]", "", NAME)) < len(NAME):
   error(f"bad characters found in name: {NAME}")
 
 # no yaml file exists
