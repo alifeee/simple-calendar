@@ -1,3 +1,4 @@
 {
-  "baseURL": "https://calendar.site"
+  "baseURL": "https://calendar.site",
+  "baseName": "Simple Calendar"
 }
