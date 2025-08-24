@@ -96,12 +96,16 @@ sudo nano /etc/nginx/nginx.conf
 ```nginx
   server {
     server_name cal.alifeee.co.uk;
+    root /var/www/simple-calendar/_site;
     location / {
-      root /var/www/simple-calendar/_site;
       try_files $uri $uri/ =404;
       add_header Cache-Control no-cache;
       if_modified_since off;
       add_header Last-Modified "";
+    }
+    location ~ .ics$ {
+      add_header Content-type text/calendar;
+      try_files $uri =404;
     }
     location = /edit {
       include fastcgi_params;
