@@ -140,3 +140,12 @@ to test edit script:
 ```bash
 echo 'name=alfie&2024-09-01=what' | sudo -u www-data ./edit
 ```
+
+## ical files
+
+Several `.icalendar` files are generated, following the ical format standard. These links are helpful for understanding:
+
+- example <https://fixtur.es/en/team/sheffield-united-fc/home>
+- validator <https://icalendar.org/validator.html>
+- viewer <https://larrybolt.github.io/online-ics-feed-viewer/>
+- google import link <https://www.google.com/calendar/render?cid=webcal://server.alifeee.net/static/alfie.ical>
