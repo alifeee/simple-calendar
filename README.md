@@ -105,6 +105,9 @@ sudo nano /etc/nginx/nginx.conf
     }
     location ~ .ics$ {
       add_header Content-type text/calendar;
+      add_header Access-Control-Allow-Origin *;
+      charset utf-8;
+      source_charset utf-8;
       try_files $uri =404;
     }
     location = /edit {
