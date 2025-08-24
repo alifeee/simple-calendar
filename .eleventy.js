@@ -224,6 +224,9 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addFilter("gt", (v1, v2) => {
     return v1 > v2;
   });
+  eleventyConfig.addFilter("echo", (val) => {
+    return val;
+  });
   eleventyConfig.addFilter("crlf", (content) => {
     // turn file from "LF" format into "CRLF" format
     // for ical files, which require this
