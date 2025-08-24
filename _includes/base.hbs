@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <head>
-  <title>Calendar</title>
+  <title>{{info.baseName}}</title>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <link rel="icon" href="https://server.alifeee.net/favicon.ico">
@@ -154,7 +154,7 @@
 </head>
 <body>
   <header>
-    <h1>Calendar</h1>
+    <h1>{{info.baseName}}</h1>
     Last updated:
     <time id="lastupdated" datetime="{{isodatetime (now)}}" title="{{isodatetime (now)}}">{{readableDate (now)}}</time>
     <span id="timeAgo"></span>
