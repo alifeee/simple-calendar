@@ -184,7 +184,29 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addFilter("get", (obj, key) => {
     return obj[key];
   });
+  eleventyConfig.addFilter("parsedate", (dtstring) => {
+    return new Date(dtstring);
+  });
+  eleventyConfig.addFilter("icaldatetime", (dt) => {
+    // turn datetime object into e.g. "20250811T141100Z"
+    return dt.toISOString().replace(/-|:|\.[0-9]*/g, "");
+  });
+  eleventyConfig.addFilter("icaldate", (dt) => {
+    // turn datetime object into e.g. "20250811"
+    return dt.toISOString().split("T")[0].replace(/-/g, "");
+  });
+  eleventyConfig.addFilter("icalsummary", (summary) => {
+    // fudge with summary to make it ical compliant (max line length)
+    let MAX_LENGTH = 50;
+    summary = summary.replace(/\r|\n/g, "");
+    while (summary.split("\n")[0].length > MAX_LENGTH) {
+      summary =
+        summary.slice(0, MAX_LENGTH) + "\n\t" + summary.slice(MAX_LENGTH);
+    }
+    return summary;
+  });
   eleventyConfig.addFilter("isodate", (dt) => {
+    // turn datetime object into e.g. "2025-08-11"
     return dt.toISOString().split("T")[0];
   });
   eleventyConfig.addFilter("isodatetime", (dt) => {
@@ -201,6 +223,11 @@ module.exports = function (eleventyConfig) {
   });
   eleventyConfig.addFilter("gt", (v1, v2) => {
     return v1 > v2;
+  });
+  eleventyConfig.addFilter("crlf", (content) => {
+    // turn file from "LF" format into "CRLF" format
+    // for ical files, which require this
+    return content.replace(/(?<!\r)\n/g, "\r\n");
   });
   eleventyConfig.addFilter("readableDate", (dt) => {
     // with time

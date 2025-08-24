@@ -17,6 +17,12 @@
     }
     main {
     }
+    .key {
+      margin-bottom: 1rem;
+    }
+    .ical {
+      margin-bottom: 1rem;
+    }
     table {
       border-collapse: separate;
       border-spacing: 0;
@@ -74,9 +80,6 @@
       {{/if}}
     }
     {{/each}}
-    button {
-      margin-bottom: 1rem;
-    }
   </style>
   <script>
     function goToToday() {
@@ -167,6 +170,18 @@
       · <a href="/{{this}}/" class="{{this}}">{{this}}</a>
       {{/each}}
       · <a href="/new/">(new name)</a>
+    </section>
+    <section class="ical">
+      sync to calendar{{#if name}} ({{name}} events only){{/if}}:
+        <a target="_blank" href="https://www.google.com/calendar/render?cid=webcal://{{info.baseURL}}{{#if name}}/{{name}}{{/if}}/calendar.ics">
+          Google Calendar
+        </a>
+        ·
+        <a target="_blank" href="https://outlook.live.com/owa/?rru=addsubscription&name={{info.baseName}}&url=webcal://{{info.baseURL}}{{#if name}}/{{name}}{{/if}}/calendar.ics">Outlook/Hotmail</a>
+        ·
+        <a href="webcal://{{info.baseURL}}{{#if name}}/{{name}}{{/if}}/calendar.ics">other calendars</a>
+        ·
+        <a href="{{#if name}}/{{name}}{{/if}}/calendar.ics">raw ical file</a>
     </section>
     {{{content}}}
   </main>

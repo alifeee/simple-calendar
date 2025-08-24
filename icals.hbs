@@ -1,0 +1,21 @@
+---
+layout: ical
+pagination:
+  data: names
+  size: 1
+  alias: name
+permalink: /{{name}}/calendar.ics
+eleventyComputed:
+    cal_pre_name: "{{name}} on "
+    cal_description_by: "{{name}}"
+---
+{{#each (get . name)}}
+BEGIN:VEVENT
+DTSTAMP:{{icaldatetime (now)}}
+UID:{{../name}}-{{@key}}
+DTSTART;VALUE=DATE:{{icaldate (parsedate @key)}}
+{{!-- DTEND;VALUE=DATE:20150812 — not needed for full-day event --}}
+STATUS:CONFIRMED
+SUMMARY:{{../name}} – {{icalsummary .}}
+END:VEVENT
+{{/each}}

@@ -1,0 +1,19 @@
+---
+layout: crlf
+cal_pre_name: ""
+cal_description_by: "everyone"
+---
+BEGIN:VCALENDAR
+PRODID:-//alifeee//Simple Calendar Version 1.0//EN
+VERSION:2.0
+CALSCALE:GREGORIAN
+NAME:{{cal_pre_name}}{{info.baseName}}
+X-WR-CALNAME:{{cal_pre_name}}{{info.baseName}}
+DESCRIPTION:events by {{cal_description_by}} on {{info.baseName}}
+X-WR-CALDESC:events by {{cal_description_by}} on {{info.baseName}}
+TIMEZONE-ID:Europe/London
+X-WR-TIMEZONE:Europe/London
+METHOD:PUBLISH
+COLOR:170:68:170
+{{content~}}
+END:VCALENDAR
