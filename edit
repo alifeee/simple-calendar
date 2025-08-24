@@ -68,6 +68,8 @@ log(f"saving yaml to {YAML_FILE}")
 with open(YAML_FILE, "w", encoding="utf-8") as file:
     file.write(dump(newfile))
 
+os.chmod(YAML_FILE, 0o664)
+
 log("running npm run build")
 _ = os.system("./build.sh &>/dev/null")
 
