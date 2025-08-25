@@ -3,7 +3,7 @@ layout: ical
 permalink: /calendar.ics
 ---
 {{#each names}}
-{{#each (get .. this)}}
+{{#each (expandcal (get .. this))}}
 BEGIN:VEVENT
 DTSTAMP:{{icaldatetime (now)}}
 UID:{{../this}}-{{@key}}

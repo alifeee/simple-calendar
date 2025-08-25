@@ -171,6 +171,69 @@ module.exports = function (eleventyConfig) {
     return calendar;
   });
 
+  // expandcal – for ical files which expect each event to…
+  //   …have its own date key in the calendar object
+  // e.g.,
+  // 2025-08-25:
+  // - "event 1"
+  // - "event 2:
+  // …into…
+  // 2025-08-25: "event 1"
+  // 2025-08-26: "event 2"
+  eleventyConfig.addFilter("expandcal", (calobj) => {
+    let dates = {};
+
+    function add_to_dates(dates, date, eventstr) {
+      // if date is not in dates, add it
+      if (!dates[date]) {
+        dates[date] = eventstr;
+      } else {
+        // throw error if date is already in dates
+        throw new Error(
+          `Name date already in dates[${date}]. Use unique dates.`
+        );
+      }
+    }
+
+    // for each date
+    Object.keys(calobj).forEach((date) => {
+      // for each item in date
+      let firstdate = new Date(date);
+      firstdate = new Date(
+        Date.UTC(
+          firstdate.getUTCFullYear(),
+          firstdate.getUTCMonth(),
+          firstdate.getUTCDate()
+        )
+      );
+      const thisdata = calobj[date];
+
+      // string (one event for one date)
+      if (typeof thisdata == "string") {
+        add_to_dates(dates, firstdate, thisdata);
+      }
+      // array (multiple events in succession starting from one date)
+      else {
+        thisdata.forEach((item, index) => {
+          // add index days to firstdate
+          let thisdate = firstdate;
+          if (index > 0) {
+            thisdate = new Date(
+              Date.UTC(
+                firstdate.getUTCFullYear(),
+                firstdate.getUTCMonth(),
+                firstdate.getUTCDate() + index
+              )
+            );
+          }
+          add_to_dates(dates, thisdate, item);
+        });
+      }
+    });
+
+    return dates;
+  });
+
   eleventyConfig.addFilter("flatten", (array2d) => {
     return array2d.flat();
   });
