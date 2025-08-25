@@ -10,6 +10,6 @@ UID:{{../this}}-{{@key}}
 DTSTART;VALUE=DATE:{{icaldate (parsedate @key)}}
 {{!-- DTEND;VALUE=DATE:20150812 — not needed for full-day event --}}
 STATUS:CONFIRMED
-SUMMARY:{{../this}} – {{icalsummary .}}
+SUMMARY:{{../this}} – {{{icalsummary .}}}
 END:VEVENT
 {{/each}}{{/each}}
