@@ -290,10 +290,11 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addFilter("echo", (val) => {
     return val;
   });
-  eleventyConfig.addFilter("crlf", (content) => {
+  eleventyConfig.addFilter("crlfical", (content) => {
     // turn file from "LF" format into "CRLF" format
     // for ical files, which require this
-    return content.replace(/(?<!\r)\n/g, "\r\n");
+    // and also remove any blank lines
+    return content.replace(/\n*/, "\n").replace(/(?<!\r)\n/g, "\r\n");
   });
   eleventyConfig.addFilter("readableDate", (dt) => {
     // with time
