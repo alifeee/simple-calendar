@@ -1,3 +1,5 @@
+> [!CAUTION]
+> MOVED! see <https://git.alifeee.net/simple-calendar/about/>
 # Calendar
 
 Extremely simple calendar app
