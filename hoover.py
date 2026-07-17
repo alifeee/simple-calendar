@@ -31,7 +31,7 @@ for yaml_file in yaml_files:
         contents_yaml = {}
 
     # backup
-    now = datetime.utcnow()
+    now = datetime.now(timezone.utc)
     now_str = now.strftime("%Y-%m-%dT%H%M%S")
     backup_folder = os.path.join(folder, "backups", now_str)
     if not os.path.exists(backup_folder):
