@@ -24,7 +24,7 @@ def error(message):
 
 
 def log(message):
-    now = datetime.utcnow()
+    now = datetime.now(timezone.utc)
     now_str = now.strftime("%Y-%m-%d %H:%M:%S")
     with open("log", "a", encoding="utf-8") as file:
         print(f"[{now_str}]: {message}", file=file)
@@ -45,7 +45,7 @@ for date, event in qs.items():
         error(f"bad date: {date}\n for event: {event}")
 
 # backup _data folder
-now = datetime.utcnow()
+now = datetime.now(timezone.utc)
 now_str = now.strftime("%Y-%m-%dT%H%M%S")
 log("starting an edit")
 backup_folder = os.path.join("backups", now_str)
